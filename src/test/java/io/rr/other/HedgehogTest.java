@@ -10,12 +10,6 @@ import static org.junit.Assert.*;
  */
 public class HedgehogTest {
 
-
-//    @Before
-//    public void setUp() throws Exception {
-//
-//    }
-
     @Test
     public void testIter3X3() {
         int [][] arr3x3 = new int[][]{

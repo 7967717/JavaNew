@@ -11,7 +11,8 @@ public class Main {
         System.out.println("Enter Text: ");
         EventSource eventSource = new EventSource();
 
-        eventSource.addObserver((obj, arg) -> System.out.println("Received response: " + arg));
+        eventSource.addObserver((observable, message) ->
+                System.out.println("Received message: " + message + " from " + observable.getClass()));
 
         new Thread(eventSource).start();
     }

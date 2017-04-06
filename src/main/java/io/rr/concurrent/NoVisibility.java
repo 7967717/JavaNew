@@ -1,4 +1,4 @@
-package io.rr.concurrent.sync;
+package io.rr.concurrent;
 
 /**
  * @author roman on 2/13/17.
@@ -19,7 +19,7 @@ public class NoVisibility {
 
     public static void main(String[] args) throws InterruptedException {
         new Reader().start();
-//        Thread.sleep(8);
+        Thread.sleep(8);
         number = 7;
         ready = true;
     }

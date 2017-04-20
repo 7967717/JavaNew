@@ -19,7 +19,7 @@ public class NoVisibility {
 
     public static void main(String[] args) throws InterruptedException {
         new Reader().start();
-        Thread.sleep(8);
+        Thread.sleep(1);
         number = 7;
         ready = true;
     }

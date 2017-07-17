@@ -8,15 +8,12 @@ public class SimpleDeadLock {
     public static void main(String[] args) throws InterruptedException {
         Thread main = Thread.currentThread();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println("in " + Thread.currentThread());
-                    main.join();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        Thread thread = new Thread(() -> {
+            try {
+                System.out.println("in " + Thread.currentThread());
+                main.join();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
         thread.start();

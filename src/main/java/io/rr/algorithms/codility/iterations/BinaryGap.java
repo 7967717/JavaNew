@@ -1,13 +1,14 @@
 package io.rr.algorithms.codility.iterations;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @author roman on 9/30/17.
  */
+
+//100%
 public class BinaryGap {
     public static void main(String[] args) {
         System.out.println(solution(1));
@@ -23,7 +24,7 @@ public class BinaryGap {
         System.out.println(solution(123456));
     }
 
-    public static int solution(int n) {
+    private static int solution(int n) {
         char[] chars = Integer.toBinaryString(n).toCharArray();
         List<Integer> list = new ArrayList<>();
         int acc = 0;

@@ -1,6 +1,7 @@
 package io.rr.algorithms.codility.iterations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,10 +27,6 @@ public class BinaryGap {
         char[] chars = Integer.toBinaryString(n).toCharArray();
         List<Integer> list = new ArrayList<>();
         int acc = 0;
-        for (int i = chars.length - 1; i >= 0; i--) {
-            if(chars[i] == '0') chars[i] = '-';
-            else break;
-        }
         for (char aChar : chars) {
             if (aChar == '0') acc++;
             else {
@@ -37,7 +34,6 @@ public class BinaryGap {
                 acc = 0;
             }
         }
-
         return Collections.max(list);
     };
 }

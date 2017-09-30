@@ -9,20 +9,24 @@ import java.util.List;
  */
 public class BinaryGap {
     public static void main(String[] args) {
+        System.out.println(solution(1));
+        System.out.println(solution(2));
+        System.out.println(solution(3));
         System.out.println(solution(9));
         System.out.println(solution(15));
+        System.out.println(solution(20));
         System.out.println(solution(529));
+        System.out.println(solution(1041));
+        System.out.println(solution(1234));
+        System.out.println(solution(12345));
+        System.out.println(solution(123456));
     }
 
     public static int solution(int n) {
         char[] chars = Integer.toBinaryString(n).toCharArray();
         List<Integer> list = new ArrayList<>();
         int acc = 0;
-        for (int i = 0; i < chars.length; i++) {
-            if(chars[i] == '0') chars[i] = '-';
-            else break;
-        }
-        for (int i = chars.length - 1; i < 1; i--) {
+        for (int i = chars.length - 1; i >= 0; i--) {
             if(chars[i] == '0') chars[i] = '-';
             else break;
         }

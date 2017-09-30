@@ -6,7 +6,6 @@ package io.rr.algorithms;
 public class ReverseString {
     public static void main(String[] args) {
         System.out.println(reverse("Hello"));
-
     }
 
     private static String reverse(String s) {
@@ -14,11 +13,9 @@ public class ReverseString {
             return s;
         }
 
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
-        for (int i = s.length() - 1; i >= 0; i--) {
-            res = res + s.charAt(i);
-        }
-        return res;
+        for (int i = s.length() - 1; i >= 0; i--) res.append(s.charAt(i));
+        return res.toString();
     }
 }

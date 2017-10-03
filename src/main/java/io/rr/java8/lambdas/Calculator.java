@@ -1,4 +1,4 @@
-package io.rr.lambdas;
+package io.rr.java8.lambdas;
 
 /**
  * @author romanr on 2/16/2017.

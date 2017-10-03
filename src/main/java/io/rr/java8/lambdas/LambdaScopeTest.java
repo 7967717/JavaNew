@@ -1,4 +1,4 @@
-package io.rr.lambdas;
+package io.rr.java8.lambdas;
 
 import java.util.function.Consumer;
 

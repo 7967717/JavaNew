@@ -8,25 +8,45 @@ import java.util.function.Supplier;
  * @author rrudenko on 02.10.2017.
  */
 public class CompletableFuture0 implements Supplier<Integer> {
+    private Integer value;
+
+    public CompletableFuture0(Integer value) {
+        System.out.println(Thread.currentThread() + " initial value - " + value);
+        this.value = value;
+    }
+
     @Override
     public Integer get() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
+            value++;
+            System.out.println(Thread.currentThread() + " first computation - " + value);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return 1;
+        return value;
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println(Thread.currentThread() + " start async computation");
         ExecutorService exec = Executors.newSingleThreadExecutor();
-        CompletableFuture<Integer> f = CompletableFuture.supplyAsync(new CompletableFuture0(), exec);
-        System.out.println(f.isDone());
-        CompletableFuture<Integer> f2 = f.thenApply(i -> i + 1);
+        CompletableFuture<Integer> f1 = CompletableFuture.supplyAsync(new CompletableFuture0(0), exec);
+        CompletableFuture<Integer> f2 = f1.thenApplyAsync(i -> {
+            i++;
+            System.out.println(Thread.currentThread() + " computation after f1 - " + i);
+            return i;
+        });
+        f2.thenApplyAsync(i -> {
+            i++;
+            System.out.println(Thread.currentThread() + " computation after f2 - " + i);
+            return i;
+        });
+        System.out.println(f1.getNow(-1));
+        System.out.println(f2.getNow(-1));
+        System.out.println(f1.isDone());
         System.out.println(f2.isDone());
-        System.out.println(f2.get());
-        System.out.println(f.isDone());
-        System.out.println(f2.isDone());
+        System.out.println(Thread.currentThread() + " going on in main");
+        Thread.sleep(1000);
         exec.shutdown();
     }
 }

@@ -15,7 +15,7 @@ public class ElementTest {
 
 
     @Test
-    public void getUnique() throws Exception {
+    public void getUnique() {
         Collection<Element> coll = Arrays.asList(
                 new Element(1, "one", 22),
                 new Element(1, "one1", 22),
@@ -26,7 +26,7 @@ public class ElementTest {
 
         Collection<Element> unique = Element.getUnique(coll);
 
-        System.out.println(unique);
+        unique.forEach(System.out::println);
     }
 
 }

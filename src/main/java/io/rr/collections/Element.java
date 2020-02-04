@@ -12,13 +12,13 @@ public class Element {
     private String name;
     private int age;
 
-    public Element(int num, String name, int age) {
+    Element(int num, String name, int age) {
         this.num = num;
         this.name = name;
         this.age = age;
     }
 
-    public static Collection<Element> getUnique(Collection<Element> in) {
+    static Collection<Element> getUnique(Collection<Element> in) {
         Collection <Element> out = new HashSet<>();
         for (Element elem : in) {
             if(elem.age > 20) {
@@ -37,6 +37,11 @@ public class Element {
         Element element = (Element) o;
 
         return num == element.num;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override

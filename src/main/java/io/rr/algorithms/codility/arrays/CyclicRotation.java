@@ -22,5 +22,5 @@ public class CyclicRotation {
         }
 
         return sol;
-    };
+    }
 }

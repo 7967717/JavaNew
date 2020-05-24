@@ -17,10 +17,10 @@ public class AnExample {
                     Thread.sleep(1000);
                 } catch (Exception ex) {
                 }
-//                bs.set(1);
-                synchronized (bs) {
-                    bs.set(1);
-                }
+                bs.set(1);
+//                synchronized (bs) {
+//                    bs.set(1);
+//                }
             }
         });
         Thread t2 = new Thread(new Runnable() {
@@ -30,10 +30,10 @@ public class AnExample {
                     Thread.sleep(1000);
                 } catch (Exception e) {
                 }
-//                bs.set(2);
-                synchronized (bs) {
-                    bs.set(2);
-                }
+                bs.set(2);
+//                synchronized (bs) {
+//                    bs.set(2);
+//                }
             }
         });
 

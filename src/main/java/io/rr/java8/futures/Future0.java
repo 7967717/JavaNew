@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 public class Future0 implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         return 1;
     }
 

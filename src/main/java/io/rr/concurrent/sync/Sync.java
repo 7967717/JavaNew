@@ -14,11 +14,11 @@ public class Sync {
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        IntStream.range(0, 10000)
-                .forEach(i -> executor.submit(new Incrementer()));
+//        IntStream.range(0, 10000)
+//                .forEach(i -> executor.submit(new Incrementer()));
 
-//        IntStream.range(0, 1000)
-//                .forEach(i -> executor.submit(Sync::incrementSync));
+        IntStream.range(0, 1000)
+                .forEach(i -> executor.submit(new Incrementer()));
 
 //        ConcurrentUtils.stop(executor);
 
@@ -36,8 +36,8 @@ class Incrementer implements Callable {
 
     @Override
     public Object call() throws Exception {
-        increment();
-//        incrementSync();
+//        increment();
+        incrementSync();
         return count;
     }
 
@@ -45,7 +45,7 @@ class Incrementer implements Callable {
         count = count + 1;
     }
 
-    static synchronized void incrementSync() {
+    synchronized void incrementSync() {
         count = count + 1;
     }
 }

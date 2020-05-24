@@ -12,8 +12,8 @@ public class Equilibrium {
         int ind = -1;
         int rSum = 0, lSum = 0;
 
-        for (int index = 0; index < a.length; index++) {
-            rSum += a[index];
+        for (int anA : a) {
+            rSum += anA;
         }
 
         for (int index = 0; index < a.length; index++) {

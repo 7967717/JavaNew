@@ -28,6 +28,6 @@ public class Calculator {
         System.out.println("40 + 2 = " +
                 myApp.operateBinary(40, 2, addition));
         System.out.println("20 - 10 = " +
-                myApp.operateBinary(20, 10, subtraction));
+                myApp.operateBinary(20, 10, (a, b) -> a - b));
     }
 }

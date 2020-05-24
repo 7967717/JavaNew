@@ -5,10 +5,10 @@ import java.util.*;
 /**
  * @author roman on 7/31/17.
  */
-public class App1 {
+public class Permute {
 
     public static void main(String[] args) {
-        Set<List<Integer>> set = new HashSet();
+        Set<List<Integer>> set = new HashSet<>();
 
         permute(Arrays.asList(1, 0, 0), 0, set);
         System.out.println(set.size());

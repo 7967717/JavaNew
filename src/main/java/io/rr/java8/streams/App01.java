@@ -2,8 +2,6 @@ package io.rr.java8.streams;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class App01 {
@@ -12,7 +10,7 @@ public class App01 {
 
         System.out.println(Arrays.stream(strarr).map(String::length).collect(Collectors.toList()));
         System.out.println(Arrays.toString(Arrays.stream(strarr).mapToInt(String::length).toArray()));
-        System.out.println(Arrays.stream(strarr).map(String::length).max(Comparator.comparingInt(a -> a)));
+        System.out.println(Arrays.stream(strarr).map(String::length).max(Comparator.comparingInt(a -> - a)));
         System.out.println(Arrays.stream(strarr).mapToInt(String::length).max());
 
         System.out.println(Arrays.stream(strarr).reduce(0, (l, s) -> l + s.length(), (s1, s2) -> s1 + s2));
@@ -23,6 +21,8 @@ public class App01 {
                 .mapToInt(a -> a * a)
                 .filter(b -> b > 10000)
                 .average());
+        System.out.println();
+        System.out.println(Arrays.asList(1,2,3));
 
     }
 }

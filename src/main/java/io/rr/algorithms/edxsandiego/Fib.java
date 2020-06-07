@@ -30,12 +30,14 @@ public class Fib {
         System.out.println(fibN(1));
         System.out.println(fibN(2));
         System.out.println(fibN(3));
+        System.out.println(fibN(20));
         System.out.println(fibN(50));
         System.out.println(fibN(100));
 
         System.out.println();
         System.out.println(fib(0));
         System.out.println(fib(1));
+        System.out.println(fib(2));
         System.out.println(fib(3));
         System.out.println(fib(20));
     }

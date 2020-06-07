@@ -4,7 +4,7 @@ package io.rr.collections.tree;
  * @author roman on 4/4/17.
  */
 public class BTN<T> {
-    private int val;
+    private T val;
     private BTN<T> left;
     private BTN<T> right;
 

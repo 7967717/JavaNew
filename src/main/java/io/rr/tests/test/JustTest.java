@@ -1,4 +1,4 @@
-package io.rr.tests.mockito;
+package io.rr.tests.test;
 
 /**
  * @author rrudenko on 13.06.2017.

@@ -5,16 +5,42 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int sr = scanner.nextInt();
-        String n = scanner.next();
-        int tr = scanner.nextInt();
+        String sr = scanner.nextLine();
+        if (!sr.matches("([1-9]|[1-2][0-9]|[3][0-6])")) {
+            System.out.println("Error. Invalid source radix: " + sr);
+            System.exit(0);
+        }
+        int isr = Integer.parseInt(sr);
+
+        String n = scanner.nextLine();
+
+        if (!n.matches("^[a-zA-Z0-9.]*$")) {
+            System.out.println("Error. Invalid number: " + n);
+            System.exit(0);
+        }
 
         String[] ss = n.split("\\.");
 
-        String integerPart = convertIntegerPart(sr, ss[0], tr);
+        if (isr != 1) {
+            try {
+                Integer.parseInt(ss[0], isr);
+            } catch (Exception e) {
+                System.out.println("Error. Invalid number: " + n);
+                System.exit(0);
+            }
+        }
+
+        String tr = scanner.nextLine();
+        if (!tr.matches("([1-9]|[1-2][0-9]|[3][0-6])")) {
+            System.out.println("Error. Invalid target radix: " + tr);
+            System.exit(0);
+        }
+        int itr = Integer.parseInt(tr);
+
+        String integerPart = convertIntegerPart(isr, ss[0], itr);
         String fractionalPart = "";
         if (ss.length > 1) {
-            fractionalPart = convertFractionalPart(sr, ss[1], tr);
+            fractionalPart = convertFractionalPart(isr, ss[1], itr);
         }
         System.out.println(integerPart + fractionalPart);
     }

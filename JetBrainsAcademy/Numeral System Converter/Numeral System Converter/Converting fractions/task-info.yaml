@@ -172,6 +172,9 @@ files:
         }
     }
   learner_created: true
+- name: src/converter/Stage5.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/41/stages/218/implement
-status: Failed
+status: Solved
 record: 4

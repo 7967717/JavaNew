@@ -2,7 +2,7 @@ package converter;
 
 import java.util.Scanner;
 
-public class Main {
+public class Stage5 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int sr = scanner.nextInt();
@@ -14,14 +14,15 @@ public class Main {
         String integerPart = convertIntegerPart(sr, ss[0], tr);
         String fractionalPart = "";
         if (ss.length > 1) {
-            fractionalPart = convertFractionalPart(sr, ss[1], tr);
+            fractionalPart = "." + convertFractionalPart(sr, ss[1], tr);
         }
         System.out.println(integerPart + fractionalPart);
     }
 
     private static String convertIntegerPart(int sr, String n, int tr) {
-        int dn = (sr == 1) ? n.length() : Integer.parseInt(n, sr);
         StringBuilder sb = new StringBuilder();
+
+        int dn = (sr == 1) ? n.length() : Integer.parseInt(n, sr);
         if (tr == 1) {
             sb.append("1".repeat(dn));
         } else {
@@ -38,7 +39,7 @@ public class Main {
             dv += num / Math.pow(sr, i + 1);
         }
 
-        StringBuilder sb = new StringBuilder().append(".");
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 5; i++) {
             String[] split = String.valueOf(dv * tr).split("\\.");
             char c = Character.forDigit(Integer.parseInt(split[0]), tr);

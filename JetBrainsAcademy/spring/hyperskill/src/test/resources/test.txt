@@ -1,0 +1,11 @@
+curl -X POST -H "Content-Type:application/json" -d '{"id": "1", "name": "Task1", "description": "Just test", "completed": false}' http://localhost:8080/tasks
+
+
+
+curl -X POST -H "Content-Type:application/json" -d '{"id":1,"name":"One","phone":"123","enabled":true}' http://localhost:8080/greet
+
+curl -X POST -H "Content-Type:application/json" -d '[
+{"id":1,"name":"One","phone":"123","enabled":true},
+{"id":2,"name":"Two","phone":"123","enabled":false},
+{"id":3,"name":"Three","phone":"123","enabled":true}
+]' http://localhost:8080/greetUsers

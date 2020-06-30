@@ -1,0 +1,346 @@
+type: edu
+custom_name: stage4
+files:
+- name: test/PhoneBookTest.java
+  visible: false
+  text: "import org.hyperskill.hstest.stage.StageTest;\nimport org.hyperskill.hstest.testcase.CheckResult;\n\
+    import org.hyperskill.hstest.testcase.TestCase;\nimport phonebook.Main;\n\nimport\
+    \ java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\nimport\
+    \ java.util.regex.Matcher;\nimport java.util.regex.Pattern;\n\npublic class PhoneBookTest\
+    \ extends StageTest {\n    public PhoneBookTest() {\n        super(Main.class);\n\
+    \    }\n    \n    private long timeOnTestStart;\n    \n    @Override\n    public\
+    \ List<TestCase> generate() {\n        timeOnTestStart = System.currentTimeMillis();\n\
+    \        return Arrays.asList(\n            new TestCase().setTimeLimit(30 * 60\
+    \ * 1000)\n        );\n    }\n    \n    \n    private CheckResult checkPhrases(String\
+    \ reply, String... phrases) {\n        reply = reply.toLowerCase();\n        for\
+    \ (String phrase : phrases) {\n            if (!reply.contains(phrase.toLowerCase()))\
+    \ {\n                return CheckResult.wrong(\"Not found the part `\" + phrase\
+    \ + \"` in your output.\");\n            }\n        }\n        return CheckResult.correct();\n\
+    \    }\n    \n    private List<String> findAll(String reply, String regex) {\n\
+    \        Matcher matcher = Pattern.compile(regex).matcher(reply);\n        List<String>\
+    \ groups = new ArrayList<>();\n        while (matcher.find()) {\n            groups.add(matcher.group());\n\
+    \        }\n        return groups;\n    }\n    \n    private String timeRegex\
+    \ = \"(\\\\d+)\\\\s*min.*?(\\\\d+)\\\\s*sec.*?(\\\\d+)\\\\s*ms\";\n    private\
+    \ Pattern timeRegexPattern = Pattern.compile(timeRegex);\n    \n    private long\
+    \ parseTimestamp(String timestamp) {\n        Matcher matcher = timeRegexPattern.matcher(timestamp);\n\
+    \        if (!matcher.matches() || matcher.groupCount() < 3) {\n            throw\
+    \ new IllegalStateException(\"???Not matches the line \" + timestamp);\n     \
+    \   }\n        int min = Integer.parseInt(matcher.group(1));\n        int sec\
+    \ = Integer.parseInt(matcher.group(2));\n        int ms = Integer.parseInt(matcher.group(3));\n\
+    \        return ms + sec * 1000 + min * 1000 * 60;\n    }\n    \n    \n    \n\
+    \    @Override\n    public CheckResult check(String reply, Object clue) {\n  \
+    \      long realTime = System.currentTimeMillis() - timeOnTestStart;\n       \
+    \ reply = reply.toLowerCase();\n        CheckResult res = checkPhrases(reply,\n\
+    \                \"found\",\n                \"min.\",\n                \"sec.\"\
+    ,\n                \"ms.\",\n                \"sorting time\",\n             \
+    \   \"searching time\",\n                \"linear search\",\n                \"\
+    bubble sort\",\n                \"jump search\",\n                \"quick sort\"\
+    ,\n                \"binary search\",\n                \"hash table\",\n     \
+    \           \"creating time\"\n        );\n        if (!res.isCorrect()) {\n \
+    \           return res;\n        }\n    \n        List<String> stat1 = findAll(reply,\
+    \ \"500 / 500\");\n        List<String> stat2 = findAll(reply, \"500/500\");\n\
+    \    \n        if (stat1.size() + stat2.size() < 4) {\n            return CheckResult.wrong(\"\
+    Your output should contain 4 times the phrase `500 / 500`\");\n        }\n   \
+    \ \n        List<String> timestamps = findAll(reply, timeRegex);\n        if (timestamps.size()\
+    \ != 10) {\n            return CheckResult.wrong(\"Your output should contain\
+    \ 10 timer outputs, but found \"\n                    + timestamps.size());\n\
+    \        }\n        // should not fail..\n        long t1 = parseTimestamp(timestamps.get(0));\n\
+    \        long t2 = parseTimestamp(timestamps.get(1));\n        long t3 = parseTimestamp(timestamps.get(2));\n\
+    \        long t4 = parseTimestamp(timestamps.get(3));\n        // qsort\n    \
+    \    long t5 = parseTimestamp(timestamps.get(4));\n        long t6 = parseTimestamp(timestamps.get(5));\n\
+    \        long t7 = parseTimestamp(timestamps.get(6));\n        // hash table\n\
+    \        long t8 = parseTimestamp(timestamps.get(7));\n        long t9 = parseTimestamp(timestamps.get(8));\n\
+    \        long t10 = parseTimestamp(timestamps.get(9));\n    \n        if (Math.abs(t3\
+    \ + t4 - t2) > 100) {\n            return CheckResult.wrong(\"Your third and fourth\
+    \ timer outputs in total (bubble sorting and searching) \" +\n               \
+    \     \"should be equal to the second (total search time).\");\n        }\n  \
+    \      if (Math.abs(t6 + t7 - t5) > 100) {\n            return CheckResult.wrong(\"\
+    Your 6-th and 7-th timer outputs in total (qsort and searching) \" +\n       \
+    \             \"should be equal to the 5-th (total search time).\");\n       \
+    \ }\n        if (Math.abs(t9 + t10 - t8) > 100) {\n            return CheckResult.wrong(\"\
+    Your 9-th and 10-th timer outputs in total (creating hashtable and searching)\
+    \ \" +\n                    \"should be equal to the 8-th (total search time).\"\
+    );\n        }\n    \n        long estimatedTime = t1 + t2 + t5 + t8;\n       \
+    \ if (realTime < 1000) {\n            return CheckResult.wrong(\"Your program\
+    \ completes too fast. Faster than a second!\");\n        }\n\n        if (Math.abs(estimatedTime\
+    \ - realTime) > estimatedTime * 0.3) {\n            return CheckResult.wrong(\"\
+    Your estimated time is not similar to real time the program works. \" +\n    \
+    \                \"Real time: \" + realTime + \"ms, estimated time: \" + estimatedTime\
+    \ + \"ms\");\n        }\n        \n        if (t8 >= t5) {\n            return\
+    \ CheckResult.wrong(\"Your hashtable works slower, than quick sort + binary search.\"\
+    );\n        }\n        return CheckResult.correct();\n    }\n}\n"
+  learner_created: false
+- name: src/phonebook/Main.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import org.jetbrains.annotations.NotNull;
+
+    import java.io.File;
+    import java.io.FileNotFoundException;
+    import java.time.Instant;
+    import java.time.LocalTime;
+    import java.time.ZoneId;
+    import java.util.*;
+
+    import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+
+    public class Main {
+
+        public static final String DIRECTORY = "/Users/roman/IdeaProjects/JavaNew/JetBrainsAcademy/directory.txt";
+        public static final String FIND = "/Users/roman/IdeaProjects/JavaNew/JetBrainsAcademy/find.txt";
+        private static long linearSearchTime;
+        private static long sortingStart;
+        private static boolean stopSorting = false;
+
+        public static void main(String[] args) {
+            linearSearch();
+            jumpSearch();
+            binarySearch();
+        }
+
+        private static void binarySearch() {
+            try (Scanner scannerD = new Scanner(new File(DIRECTORY));
+                 Scanner scannerF = new Scanner(new File(FIND))) {
+                System.out.println("Start searching (quick sort + binary search)...");
+                long start = System.currentTimeMillis();
+
+                long sortingStart = System.currentTimeMillis();
+                String[][] dir = readDir(scannerD).toArray(new String[0][]);
+                List<String> find = readFind(scannerF);
+                quickSort(dir, 0, dir.length -1);
+                long sortingFinish = System.currentTimeMillis();
+
+                long searchStart = System.currentTimeMillis();
+                int count = find.stream()
+                        .mapToInt(e -> (binarySearch(dir, e, 0, dir.length - 1) >= 0) ? 1 : 0).sum();
+                long searchFinish = System.currentTimeMillis();
+
+                long finish = System.currentTimeMillis();
+                LocalTime time = getLocalTime(finish - start);
+                LocalTime sortingTime = getLocalTime(sortingFinish - sortingStart);
+                LocalTime searchingTime = getLocalTime(searchFinish - searchStart);
+
+                System.out.print("Found " + count + "/" + find.size() + " entries. ");
+                System.out.println("Time taken: " + time.getMinute() + " min. " +
+                        time.getSecond() + " sec. " + time.get(MILLI_OF_SECOND) + " ms.");
+                System.out.println("Sorting time: " + sortingTime.getMinute() + " min. " +
+                        sortingTime.getSecond() + " sec. " + sortingTime.get(MILLI_OF_SECOND) + " ms. ");
+                System.out.println("Searching time: " + searchingTime.getMinute() + " min. " +
+                        searchingTime.getSecond() + " sec. " + searchingTime.get(MILLI_OF_SECOND) + " ms.");
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static int binarySearch(String[][] array, String elem, int left, int right) {
+            while (left <= right) {
+                int mid = left + (right - left) / 2; // the index of the middle element
+
+                if (elem.equals(array[mid][0])) {
+                    return mid; // the element is found, return its index
+                } else if (elem.compareTo(array[mid][0]) < 0) {
+                    right = mid - 1; // go to the left subarray
+                } else {
+                    left = mid + 1;  // go the the right subarray
+                }
+            }
+            return -1; // the element is not found
+        }
+
+        public static void quickSort(String[][] array, int left, int right) {
+            if (left < right) {
+                int pivotIndex = partition(array, left, right); // the pivot is already on its place
+                quickSort(array, left, pivotIndex - 1);  // sort the left subarray
+                quickSort(array, pivotIndex + 1, right); // sort the right subarray
+            }
+        }
+
+        private static int partition(String[][] array, int left, int right) {
+            String pivot = array[right][0];  // choose the rightmost element as the pivot
+            int partitionIndex = left; // the first element greater than the pivot
+
+            /* move large values into the right side of the array */
+            for (int i = left; i < right; i++) {
+                if (array[i][0].compareTo(pivot) <= 0) { // may be used '<' as well
+                    swap(array, i, partitionIndex);
+                    partitionIndex++;
+                }
+            }
+
+            swap(array, partitionIndex, right); // put the pivot on a suitable position
+
+            return partitionIndex;
+        }
+
+        private static void swap(String[][] array, int i, int j) {
+            String[] temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
+        private static void jumpSearch() {
+            try (Scanner scannerD = new Scanner(new File(DIRECTORY));
+                 Scanner scannerF = new Scanner(new File(FIND))) {
+
+                System.out.println("Start searching(bubble sort + jump search)...");
+                long start = System.currentTimeMillis();
+                sortingStart = System.currentTimeMillis();
+                List<String[]> dir = readDir(scannerD);
+                List<String> find = readFind(scannerF);
+
+                bubbleSort(dir);
+                long sortingFinish = System.currentTimeMillis();
+
+                long searchStart = System.currentTimeMillis();
+                long count;
+                if (stopSorting) {
+                    count = dir.stream().filter(e -> find.contains(e[0])).count();
+                } else {
+                    count = find.stream().filter(e -> jumpSearch(dir, e).isPresent()).count();
+                }
+                long searchFinish = System.currentTimeMillis();
+
+                long finish = System.currentTimeMillis();
+                LocalTime time = getLocalTime(finish - start);
+                LocalTime sortingTime = getLocalTime(sortingFinish - sortingStart);
+                LocalTime searchingTime = getLocalTime(searchFinish - searchStart);
+
+                System.out.print("Found " + count + "/" + find.size() + " entries. ");
+                System.out.println("Time taken: " + time.getMinute() + " min. " +
+                        time.getSecond() + " sec. " + time.get(MILLI_OF_SECOND) + " ms.");
+                System.out.println("Sorting time: " + sortingTime.getMinute() + " min. " +
+                        sortingTime.getSecond() + " sec. " + sortingTime.get(MILLI_OF_SECOND) + " ms. "
+                        + (stopSorting ? "- STOPPED, moved to linear search" : ""));
+                System.out.println("Searching time: " + searchingTime.getMinute() + " min. " +
+                        searchingTime.getSecond() + " sec. " + searchingTime.get(MILLI_OF_SECOND) + " ms.");
+                System.out.println();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private static void bubbleSort(List<String[]> list) {
+            for (int i = 0; i < list.size() - 1; i++) {
+                for (int j = 0; j < list.size() - i - 1; j++) {
+                    if (System.currentTimeMillis() - sortingStart > linearSearchTime * 10) {
+                        stopSorting = true;
+                        return;
+                    }
+
+                    if (list.get(j)[0].compareTo(list.get(j + 1)[0]) > 0) {
+                        String[] temp = list.get(j);
+                        list.set(j, list.get(j + 1));
+                        list.set(j + 1, temp);
+                    }
+                }
+            }
+        }
+
+        private static Optional<String[]> jumpSearch(List<String[]> list, String target) {
+            int currentRight = 0; // right border of the current block
+            int prevRight = 0; // right border of the previous block
+
+            /* If list is empty, the element is not found */
+            if (list.size() == 0) {
+                return Optional.empty();
+            }
+
+            /* Check the first element */
+            if (list.get(currentRight)[0].equals(target)) {
+                return Optional.of(list.get(0));
+            }
+
+            /* Calculating the jump length over list elements */
+            int jumpLength = (int) Math.sqrt(list.size());
+
+            /* Finding a block where the element may be present */
+            while (currentRight < list.size() - 1) {
+
+                /* Calculating the right border of the following block */
+                currentRight = Math.min(list.size() - 1, currentRight + jumpLength);
+
+                if (list.get(currentRight)[0].compareTo(target) >= 0) {
+                    break; // Found a block that may contain the target element
+                }
+
+                prevRight = currentRight; // update the previous right block border
+            }
+
+            /* If the last block is reached and it cannot contain the target value => not found */
+            if ((currentRight == list.size() - 1) && target.compareTo(list.get(currentRight)[0]) > 0) {
+                return Optional.empty();
+            }
+
+            /* Doing linear search in the found block */
+            return backwardSearch(list, target, prevRight, currentRight);
+        }
+
+        private static Optional<String[]> backwardSearch(List<String[]> list, String target, int leftExcl, int rightIncl) {
+            for (int i = rightIncl; i > leftExcl; i--) {
+                if (list.get(i)[0].equals(target)) {
+                    return Optional.of(list.get(i));
+                }
+            }
+            return Optional.empty();
+        }
+
+        private static void linearSearch() {
+            try (Scanner scannerD = new Scanner(new File(DIRECTORY));
+                 Scanner scannerF = new Scanner(new File(FIND))) {
+
+                System.out.println("Start searching(linear search)...");
+                long start = System.currentTimeMillis();
+                List<String[]> dir = readDir(scannerD);
+                List<String> find = readFind(scannerF);
+
+                long count = dir.stream().filter(e -> find.contains(e[0])).count();
+    //            long count = find.stream().filter(f -> dir.stream().anyMatch(d -> d[0].equals(f))).count();
+                long finish = System.currentTimeMillis();
+                linearSearchTime = finish - start;
+                LocalTime time = getLocalTime(linearSearchTime);
+
+                System.out.print("Found " + count + "/" + find.size() + " entries. ");
+                System.out.println("Time taken: " + time.getMinute() + " min. " +
+                        time.getSecond() + " sec. " + time.get(MILLI_OF_SECOND) + " ms.");
+                System.out.println();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private static LocalTime getLocalTime(long ms) {
+            return Instant.ofEpochMilli(ms).atZone(ZoneId.systemDefault()).toLocalTime();
+        }
+
+        @NotNull
+        private static List<String[]> readDir(Scanner scannerD) {
+            List<String[]> dir = new ArrayList<>();
+            while (scannerD.hasNext()) {
+                String[] elem = new String[2];
+                elem[1] = scannerD.next();
+                elem[0] = scannerD.nextLine().trim();
+                dir.add(elem);
+            }
+            return dir;
+        }
+
+        @NotNull
+        private static List<String> readFind(Scanner scannerF) {
+            List<String> find = new ArrayList<>();
+            while (scannerF.hasNext()) {
+                find.add(scannerF.nextLine().trim());
+            }
+            return find;
+        }
+
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/63/stages/475/implement
+status: Solved
+record: 4

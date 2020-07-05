@@ -1,4 +1,4 @@
-package io.rr.algorithms;
+package io.rr.algorithms.sorting;
 
 import java.util.Arrays;
 

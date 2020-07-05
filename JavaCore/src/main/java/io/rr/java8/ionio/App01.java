@@ -15,7 +15,7 @@ public class App01 {
                 .map(word -> word.replaceAll("[^a-zA-Z]", "").trim())
                 .filter(word -> !word.isEmpty())
 //                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-                .collect(Collectors.toMap(Function.identity(), x -> 1L, (oldValue, newValue) -> oldValue + newValue));
+                .collect(Collectors.toMap(Function.identity(), x -> 1L, Long::sum));
         System.out.println(collect);
         return collect.keySet().toArray(new String[0]);
     }

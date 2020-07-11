@@ -29,3 +29,6 @@ content:
 - Remove elements of a collection
 - Reversed list
 - No  J
+- The number of occurrences
+- The maximum pairwise product
+- The first occurrence in the subarray

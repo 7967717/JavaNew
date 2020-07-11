@@ -56,6 +56,16 @@ topics:
     theory_id: 3503
   - title: Ternary operator
     theory_id: 3506
+  - title: The for-loop
+    theory_id: 3505
+  - title: The while and do-while loops
+    theory_id: 3498
+  - title: Branching statements
+    theory_id: 3507
+  - title: Processing strings
+    theory_id: 3551
+  - title: IntelliJ IDEA
+    theory_id: 3801
   1:
   - title: Units of information
     theory_id: 6865
@@ -178,9 +188,9 @@ topics:
   - title: Generics and Reflection
     theory_id: 3562
   - title: Type Erasure
-    theory_id: 3560
+    theory_id: 10086
   - title: Reification
-    theory_id: 3561
+    theory_id: 10087
   - title: Errors in programs
     theory_id: 3536
   - title: Reflection basics

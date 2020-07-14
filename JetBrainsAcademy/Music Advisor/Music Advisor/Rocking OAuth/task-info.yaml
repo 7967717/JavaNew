@@ -93,6 +93,16 @@ files:
         }
     }
   learner_created: false
+- name: src/advisor/Main.java
+  visible: true
+  learner_created: true
+- name: build.gradle
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/62/stages/336/implement
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/62/stages/336/implement">JetBrains
+    Academy</a>
+  time: Tue, 14 Jul 2020 17:37:02 UTC
+record: 1

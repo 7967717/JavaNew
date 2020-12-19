@@ -800,9 +800,9 @@ files:
                 HttpResponse<String> goodResponse = client.send(codeRequest, HttpResponse.BodyHandlers.ofString());
                 System.out.println("Tester: done request 3: " + goodResponse.body());
 
-                if (!badResponse.body().contains("Not found authorization code. Try again.")
-                        || !badResponse2.body().contains("Not found authorization code. Try again.")) {
-                    checkResult = CheckResult.wrong("You should send to the browser: `Not found authorization code. Try again.` if there is no code.");
+                if (!badResponse.body().contains("Authorization code not found. Try again.")
+                        || !badResponse2.body().contains("Authorization code not found. Try again.")) {
+                    checkResult = CheckResult.wrong("You should send to the browser: `Authorization code not found. Try again.` if there is no code.");
                     return;
                 }
 
@@ -824,6 +824,12 @@ files:
         }
     }
   learner_created: false
+- name: build.gradle
+  visible: true
+  learner_created: true
+- name: src/advisor/Main.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/62/stages/338/implement
 status: Unchecked
-record: -1
+record: 1

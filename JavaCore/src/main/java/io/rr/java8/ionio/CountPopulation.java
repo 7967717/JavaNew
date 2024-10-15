@@ -1,13 +1,12 @@
 package io.rr.java8.ionio;
 
-import lombok.SneakyThrows;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class CountPopulation {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("src/main/resources/data/dataset_91069.txt"));
         scanner.nextLine();
         int year = scanner.nextInt();

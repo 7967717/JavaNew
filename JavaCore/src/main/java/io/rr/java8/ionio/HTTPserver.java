@@ -3,7 +3,6 @@ package io.rr.java8.ionio;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,8 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HTTPserver {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create();
         server.bind(new InetSocketAddress(8080), 0);
 
@@ -55,8 +53,7 @@ public class HTTPserver {
 }
 
 class HTTPclient {
-    @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newBuilder().build();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -87,7 +84,6 @@ class HTTPclient {
 class HTTPclient1 {
     private static String authorizationCode = "17afd21c93d34971a1d12aef3511977a";
     private static String redirectUri = "http://localhost:8080";
-    @SneakyThrows
     public static void main(String[] args) {
         HttpClient client = HttpClient.newBuilder().build();
         HttpRequest request = HttpRequest.newBuilder()
